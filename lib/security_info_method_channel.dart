@@ -62,4 +62,83 @@ class MethodChannelSecurityInfo extends SecurityInfoPlatform {
         await methodChannel.invokeMethod<bool>('isMockLocationEnabled');
     return mockLocationEnabled;
   }
+
+  @override
+  Future<String?> getSecureKey(String alias) async {
+    final secureKey =
+        await methodChannel.invokeMethod<String>('getSecretKey',{"alias":alias});
+    return secureKey;
+  }
+  
+   @override
+  Future<String?> generateSecureKey(String alias) async {
+    final mockLocationEnabled =
+        await methodChannel.invokeMethod<String>('generateSecureKey',{"alias":alias});
+    return mockLocationEnabled;
+  }
+
+    @override
+  Future<bool?> hasHardwareSecurity() async {
+    final hardwareSecurity =
+        await methodChannel.invokeMethod<bool>('hasHardwareSecurity');
+    return hardwareSecurity;
+  }
+
+  @override
+  Future<bool?> hasStrongBox() async {
+    final strongBox =
+        await methodChannel.invokeMethod<bool>('hasStrongBox');
+    return strongBox;
+  }
+
+  @override
+  Future<bool?> savePin(String pin) async {
+      return await methodChannel.invokeMethod<bool>('savePin',{"pin":pin});
+  }
+
+@override  
+   Future<bool?> saveString(String alias, String pin, String key, String data) async {
+    return await methodChannel.invokeMethod<bool>('saveString',{"alias":alias,"pin":pin,"key": key, "data":data});
+  }
+
+@override
+  Future<bool?> saveBoolean(String alias, String pin, String key, bool data) async {
+    return await methodChannel.invokeMethod<bool>('saveBoolean',{"alias":alias,"pin":pin,"key": key, "data":data});
+  }
+
+@override
+  Future<bool?> saveInteger(String alias, String pin, String key, int data) async {
+    return await methodChannel.invokeMethod<bool>('saveInteger',{"alias":alias,"pin":pin,"key": key, "data":data});
+  }
+
+@override
+  Future<bool?> saveDouble(String alias, String pin, String key, double data) async {
+    return await methodChannel.invokeMethod<bool>('saveDouble',{"alias":alias,"pin":pin,"key": key, "data":data});
+  } 
+ 
+ @override  
+   Future<String?> getString(String alias,String pin, String key) async {
+    return await methodChannel.invokeMethod<String>('decryptString',{"alias":alias,"pin":pin,"key": key});
+  }
+
+@override
+  Future<bool?> getBoolean(String alias,String pin ,String key) async {
+    return await methodChannel.invokeMethod<bool>('decryptBoolean',{"alias":alias, "pin":pin ,"key": key,});
+  }
+
+@override
+  Future<int?> getInteger(String alias, String pin ,String key) async {
+    return await methodChannel.invokeMethod<int>('decryptInteger',{"alias":alias, "pin":pin ,"key": key});
+  }
+
+@override
+  Future<double?> getDouble(String alias, String pin ,String key) async {
+    return await methodChannel.invokeMethod<double>('decryptDouble',{"alias":alias, "pin":pin, "key": key});
+  } 
+
+@override
+  Future<void> testENC() async {
+    return await methodChannel.invokeMethod<void>('testENC');
+  } 
+
 }

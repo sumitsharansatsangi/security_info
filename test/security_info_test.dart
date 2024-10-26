@@ -41,6 +41,77 @@ class MockSecurityInfoPlatform
   Future<bool?> isOnExternalStorage() {
     throw UnimplementedError();
   }
+  
+  @override
+  Future<String?> getSecureKey(String alias) {
+    throw UnimplementedError();
+  }
+
+   @override
+  Future<String?> generateSecureKey(String alias) {
+    throw UnimplementedError();
+  }
+
+
+  @override
+  Future<bool?> hasStrongBox() {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool?> hasHardwareSecurity() {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool?> savePin(String pin) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool?> saveBoolean(String alias, String pin, String key, bool data) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool?> saveDouble(String alias, String pin, String key, double data) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool?> saveInteger(String alias, String pin, String key, int data) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool?> saveString(String alias, String pin, String key, String data) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool?> getBoolean(String alias, String pin, String key) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double?> getDouble(String alias, String pin ,String key) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<int?> getInteger(String alias, String pin ,String key) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<String?> getString(String alias, String pin ,String key) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<void> testENC() {
+    throw UnimplementedError();
+  }
 }
 
 void main() {

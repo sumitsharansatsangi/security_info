@@ -35,4 +35,63 @@ class SecurityInfo {
   static Future<bool?> isMockLocationEnabled() async {
     return await SecurityInfoPlatform.instance.isMockLocationEnabled();
   }
+
+  static Future<bool?> hasHardwareSecurity() async {
+    return await SecurityInfoPlatform.instance.hasHardwareSecurity();
+  }
+
+  static Future<bool?> hasStrongBox() async {
+    return await SecurityInfoPlatform.instance.hasStrongBox();
+  }
+
+  static Future<String?> getSecureKey(String alias) async {
+    return await SecurityInfoPlatform.instance.getSecureKey(alias);
+  }
+
+  static Future<String?> generateSecureKey(String alias) async {
+    return await SecurityInfoPlatform.instance.generateSecureKey(alias);
+  }
+
+  
+  static Future<bool?> savePin(String pin) async {
+        return await SecurityInfoPlatform.instance.savePin(pin);
+  }
+
+  static Future<bool?> saveString(String alias, String pin, String key, String data) async {
+     return await SecurityInfoPlatform.instance.saveString(alias, pin, key, data);
+  }
+
+static Future<bool?> saveBoolean(String alias, String pin, String key, bool data) async {
+  return await SecurityInfoPlatform.instance.saveBoolean(alias, pin, key, data);
+  }
+
+static  Future<bool?> saveInteger(String alias, String pin, String key, int data) async {
+   return await SecurityInfoPlatform.instance.saveInteger(alias, pin, key, data);
+  }
+
+static  Future<bool?> saveDouble(String alias, String pin, String key, double data) async {
+   return await SecurityInfoPlatform.instance.saveDouble(alias, pin, key, data);
+  } 
+
+static Future<String?> getString(String alias,String pin, String key) async {
+     return await SecurityInfoPlatform.instance.getString(alias,pin,key);
+  }
+
+static Future<bool?> getBoolean(String alias,String pin ,String key) async {
+  return await SecurityInfoPlatform.instance.getBoolean(alias,pin ,key);
+  }
+
+static  Future<int?> getInteger(String alias, String pin ,String key) async {
+   return await SecurityInfoPlatform.instance.getInteger(alias,pin,key);
+  }
+
+static  Future<double?> getDouble(String alias, String pin, String key) async {
+   return await SecurityInfoPlatform.instance.getDouble(alias,pin ,key);
+  } 
+
+
+static  Future<void> testENC() async {
+   return await SecurityInfoPlatform.instance.testENC();
+  } 
+
 }
