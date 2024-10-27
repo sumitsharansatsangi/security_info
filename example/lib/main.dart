@@ -30,14 +30,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String _generateSecureKey = "";
   bool _isPinSaved = false;
   bool _isStringSaved = false;
-  bool _isBoolSaved = false;
-  bool _isIntSaved = false;
-  bool _isFloatSaved = false;
+  // bool _isBoolSaved = false;
+  // bool _isIntSaved = false;
+  // bool _isFloatSaved = false;
   String _getString = "";
-  int _getInt = 0;
-  bool _getBoolean = true;
-  double _getDouble = 4.0;
-  int _testENC = 0;
+  // int _getInt = 0;
+  // bool _getBoolean = true;
+  // double _getDouble = 4.0;
+  // int _testENC = 0;
 // List<int> floatBytes = Float32List(1)..[0] = d.toFloat().buffer.asUint8List();
 
   @override
@@ -85,14 +85,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     String generateSecureKey = "";
     bool isPinSaved = false;
     bool isStringSaved = false;
-    bool isBoolSaved = false;
-    bool isIntSaved = false;
-    bool isFloatSaved = false;
+    // bool isBoolSaved = false;
+    // bool isIntSaved = false;
+    // bool isFloatSaved = false;
     String getString = "";
-    int getInt = 0;
-    bool getBoolean = true;
-    double getDouble = 4.0;
-    int testENC = 0;
+    // int getInt = 0;
+    // bool getBoolean = true;
+    // double getDouble = 4.0;
+    // int testENC = 0;
     // String getSecureKey = "";
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
@@ -149,14 +149,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       _generateSecureKey = generateSecureKey;
       _isPinSaved = isPinSaved;
       _isStringSaved = isStringSaved;
-      _isBoolSaved = isBoolSaved;
-      _isFloatSaved = isFloatSaved;
-      _isIntSaved = isIntSaved;
+      // _isBoolSaved = isBoolSaved;
+      // _isFloatSaved = isFloatSaved;
+      // _isIntSaved = isIntSaved;
       _getString = getString;
-      _getInt = getInt;
-      _getDouble = getDouble;
-      _getBoolean = getBoolean;
-      _testENC = testENC;
+      // _getInt = getInt;
+      // _getDouble = getDouble;
+      // _getBoolean = getBoolean;
+      // _testENC = testENC;
       // _getSecureKey = getSecureKey;
     });
   }
@@ -199,15 +199,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             Text(_generateSecureKey),
             Text('Is Pin Saved: $_isPinSaved\n'),
             Text('Is String Saved: $_isStringSaved\n'),
-            Text('Is Bool Saved: $_isBoolSaved\n'),
-            Text('Is Int Saved: $_isIntSaved\n'),
-            Text('Is Float Saved: $_isFloatSaved\n'),
+            // Text('Is Bool Saved: $_isBoolSaved\n'),
+            // Text('Is Int Saved: $_isIntSaved\n'),
+            // Text('Is Float Saved: $_isFloatSaved\n'),
             Text('String Saved: $_getString\n'),
-            Text('Bool Saved: $_getBoolean\n'),
-            Text('Int Saved: $_getInt\n'),
-            Text('Double Saved: $_getDouble\n'),
-            Text("Float Saved: $_isFloatSaved"),
-            Text("Test ENC: $_testENC")
+            // Text('Bool Saved: $_getBoolean\n'),
+            // Text('Int Saved: $_getInt\n'),
+            // Text('Double Saved: $_getDouble\n'),
+            // Text("Float Saved: $_isFloatSaved"),
+            // Text("Test ENC: $_testENC")
             // Text(_getSecureKey),
           ],
         ),
