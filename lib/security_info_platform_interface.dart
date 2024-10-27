@@ -53,78 +53,62 @@ abstract class SecurityInfoPlatform extends PlatformInterface {
   }
 
   Future<String?> generateSecureKey(String alias) async {
-    throw UnimplementedError(
-        'generateSecureKey() has not been implemented.');
+    throw UnimplementedError('generateSecureKey() has not been implemented.');
   }
 
-    Future<String?> getSecureKey(String alias) async {
-    throw UnimplementedError(
-        'getSecureKey() has not been implemented.');
+  Future<String?> getSecureKey(String alias) async {
+    throw UnimplementedError('getSecureKey() has not been implemented.');
   }
-
 
   Future<bool?> hasHardwareSecurity() async {
     throw UnimplementedError('hasHardwareSecurity() has not been implemented.');
   }
 
   Future<bool?> hasStrongBox() async {
-    throw UnimplementedError(
-        'hasStrongBox() has not been implemented.');
+    throw UnimplementedError('hasStrongBox() has not been implemented.');
   }
 
-  
   Future<bool?> savePin(String pin) async {
-    throw UnimplementedError(
-        'savePin() has not been implemented.');
-  }
-  
-   Future<bool?> saveString(String alias, String pin, String key, String data) async {
-    throw UnimplementedError(
-        'saveString() has not been implemented.');
+    throw UnimplementedError('savePin() has not been implemented.');
   }
 
-  Future<bool?> saveBoolean(String alias, String pin, String key, bool data) async {
-    throw UnimplementedError(
-        'saveBoolean() has not been implemented.');
+  Future<bool?> saveString(
+      String alias, String pin, String key, String data) async {
+    throw UnimplementedError('saveString() has not been implemented.');
   }
 
-  Future<bool?> saveInteger(String alias, String pin, String key, int data) async {
-    throw UnimplementedError(
-        'saveInteger() has not been implemented.');
+  // Future<bool?> saveBoolean(
+  //     String alias, String pin, String key, bool data) async {
+  //   throw UnimplementedError('saveBoolean() has not been implemented.');
+  // }
+
+  // Future<bool?> saveInteger(
+  //     String alias, String pin, String key, int data) async {
+  //   throw UnimplementedError('saveInteger() has not been implemented.');
+  // }
+
+  // Future<bool?> saveDouble(
+  //     String alias, String pin, String key, double data) async {
+  //   throw UnimplementedError('saveDouble() has not been implemented.');
+  // }
+
+  Future<String?> getString(String alias, String pin, String key) async {
+    throw UnimplementedError('getString() has not been implemented.');
   }
 
-  Future<bool?> saveDouble(String alias, String pin, String key, double data) async {
-    throw UnimplementedError(
-        'saveDouble() has not been implemented.');
-  } 
+  // Future<bool?> getBoolean(String alias, String pin, String key) async {
+  //   throw UnimplementedError('getBoolean() has not been implemented.');
+  // }
 
-   Future<String?> getString(String alias,String pin, String key) async {
-    throw UnimplementedError(
-        'getString() has not been implemented.');
-  }
+  // Future<int?> getInteger(String alias, String pin, String key) async {
+  //   throw UnimplementedError('getInteger() has not been implemented.');
+  // }
 
+  // Future<double?> getDouble(String alias, String pin, String key) async {
+  //   throw UnimplementedError('getDouble() has not been implemented.');
+  // }
 
-  Future<bool?> getBoolean(String alias,String pin ,String key) async {
-    throw UnimplementedError(
-        'getBoolean() has not been implemented.');
-  }
-
-
-  Future<int?> getInteger(String alias, String pin ,String key) async {
-    throw UnimplementedError(
-        'getInteger() has not been implemented.');
-  }
-
-
-  Future<double?> getDouble(String alias, String pin ,String key) async {
-   throw UnimplementedError(
-        'getDouble() has not been implemented.');
-  } 
-
-
-  Future<void> testENC() async {
-   throw UnimplementedError(
-        'testENC() has not been implemented.');
-  } 
-
+  // Future<int?> testENC() async {
+  //   throw UnimplementedError('testENC() has not been implemented.');
+  // }
 }
