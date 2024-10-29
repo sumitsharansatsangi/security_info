@@ -16,7 +16,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   security_info:
     path: ../
 

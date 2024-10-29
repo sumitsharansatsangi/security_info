@@ -5,6 +5,8 @@
 // platforms in the `pubspec.yaml` at
 // https://flutter.dev/to/pubspec-plugin-platforms.
 
+import 'dart:typed_data';
+
 import 'security_info_platform_interface.dart';
 
 class SecurityInfo {
@@ -44,9 +46,9 @@ class SecurityInfo {
     return await SecurityInfoPlatform.instance.hasStrongBox();
   }
 
-  static Future<String?> getSecureKey(String alias) async {
-    return await SecurityInfoPlatform.instance.getSecureKey(alias);
-  }
+  // static Future<String?> getSecureKey(String alias) async {
+  //   return await SecurityInfoPlatform.instance.getSecureKey(alias);
+  // }
 
   static Future<String?> generateSecureKey(String alias) async {
     return await SecurityInfoPlatform.instance.generateSecureKey(alias);
@@ -56,10 +58,10 @@ class SecurityInfo {
     return await SecurityInfoPlatform.instance.savePin(pin);
   }
 
-  static Future<bool?> saveString(
-      String alias, String pin, String key, String data) async {
+  static Future<bool?> saveData(
+      String alias, String pin, String key, Uint8List data) async {
     return await SecurityInfoPlatform.instance
-        .saveString(alias, pin, key, data);
+        .saveData(alias, pin, key, data);
   }
 
   // static Future<bool?> saveBoolean(
@@ -80,8 +82,8 @@ class SecurityInfo {
   //       .saveDouble(alias, pin, key, data);
   // }
 
-  static Future<String?> getString(String alias, String pin, String key) async {
-    return await SecurityInfoPlatform.instance.getString(alias, pin, key);
+  static Future<String?> getData(String alias, String pin, String key) async {
+    return await SecurityInfoPlatform.instance.getData(alias, pin, key);
   }
 
   // static Future<bool?> getBoolean(String alias, String pin, String key) async {

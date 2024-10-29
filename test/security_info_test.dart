@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_test/flutter_test.dart';
 // import 'package:security_info/security_info.dart';
 import 'package:security_info/security_info_platform_interface.dart';
@@ -42,10 +44,10 @@ class MockSecurityInfoPlatform
     throw UnimplementedError();
   }
 
-  @override
-  Future<String?> getSecureKey(String alias) {
-    throw UnimplementedError();
-  }
+  // @override
+  // Future<String?> getSecureKey(String alias) {
+  //   throw UnimplementedError();
+  // }
 
   @override
   Future<String?> generateSecureKey(String alias) {
@@ -82,11 +84,6 @@ class MockSecurityInfoPlatform
   //   throw UnimplementedError();
   // }
 
-  @override
-  Future<bool?> saveString(String alias, String pin, String key, String data) {
-    throw UnimplementedError();
-  }
-
   // @override
   // Future<bool?> getBoolean(String alias, String pin, String key) {
   //   throw UnimplementedError();
@@ -103,7 +100,12 @@ class MockSecurityInfoPlatform
   // }
 
   @override
-  Future<String?> getString(String alias, String pin, String key) {
+  Future<String?> getData(String alias, String pin, String key) {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<bool?> saveData(String alias, String pin, String key, Uint8List data) {
     throw UnimplementedError();
   }
 

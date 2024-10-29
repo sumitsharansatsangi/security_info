@@ -190,18 +190,20 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
             } else if (call.method == "generateSecureKey") {
                 val alias: String = call.argument<String>("alias").toString()
                 result.success(generateSecureKey(alias).toString())
-            } else if (call.method == "getSecretKey") {
-                val alias: String = call.argument<String>("alias").toString()
-                result.success(getSecretKey(alias).toString())
-            } else if (call.method == "deleteKey") {
+            }
+//            else if (call.method == "getSecretKey") {
+//                val alias: String = call.argument<String>("alias").toString()
+//                result.success(getSecretKey(alias).toString())
+//            }
+            else if (call.method == "deleteKey") {
                 val alias: String = call.argument<String>("alias").toString()
                 result.success(deleteKey(alias))
-            } else if (call.method == "saveString") {
+            } else if (call.method == "saveData") {
                 val alias: String = call.argument<String>("alias").toString()
                 val pin: String = call.argument<String>("pin").toString()
                 val key: String = call.argument<String>("key").toString()
-                val data: String = call.argument<String>("data").toString()
-                result.success(saveString(alias, pin, key, data))
+                val data: ByteArray = call.argument<ByteArray>("data") ?: byteArrayOf()
+                result.success(saveData(alias, pin, key, data))
             }
 //                else if (call.method == "saveInteger") {
 //                    val alias: String = call.argument<String>("alias").toString()
@@ -227,11 +229,11 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
             else if (call.method == "savePin") {
                 val pin: String = call.argument<String>("pin").toString()
                 result.success(savePin(pin))
-            } else if (call.method == "decryptString") {
+            } else if (call.method == "getData") {
                 val alias: String = call.argument<String>("alias").toString()
                 val pin: String = call.argument<String>("pin").toString()
                 val key: String = call.argument<String>("key").toString()
-                result.success(decryptString(alias, pin, key))
+                result.success(getData(alias, pin, key))
             }
 //                else if (call.method == "decryptBoolean"){
 //                    val alias: String = call.argument<String>("alias").toString()
@@ -514,30 +516,6 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
         }
     }
 
-    private fun saveString(alias: String, pin: String, key: String, data: String): Boolean {
-        try {
-            if (pinIsValid(pin)) {
-                val encryptedData = encryptData(alias, data.toByteArray())
-                val salt = getSalt()
-                if (salt != null) {
-                    val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-                    val encryptedToken = aead.encrypt(encryptedData, secretKey.encoded)
-                    sharedPreferences.edit()
-                        .putString(key, Base64.encodeToString(encryptedToken, Base64.DEFAULT))
-                        .apply()
-                    return true
-                }
-            }
-            return false
-        } catch (e: Exception) {
-            return false
-        }
-
-        //        sharedPreferences.edit()
-        //            .putString(StorageKey.SALT, Base64.encodeToString(salt, Base64.DEFAULT)).apply()
-        //        sharedPreferences.edit().putBoolean(StorageKey.PIN_IS_ENABLED, true).apply()
-        //        sharedPreferences.edit().putString("hjhj", data).apply()
-    }
 
 //        private fun saveBoolean(alias:String,pin:String,key:String, data: Boolean): Boolean {
 //            try {
@@ -610,27 +588,49 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
         return iv + encryptedData // Prepend IV to the encrypted data
     }
 
-    private fun decryptData(alias: String, encryptedData: ByteArray): ByteArray {
+    private fun decryptData(alias: String, encryptedData: ByteArray): String {
         val secretKey = getSecretKey(alias)
         val iv = encryptedData.copyOfRange(0, 12) // First 12 bytes are the IV
         val data = encryptedData.copyOfRange(12, encryptedData.size)
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(128, iv))
-        return cipher.doFinal(data)
+        val decrypted = String(cipher.doFinal(data), Charsets.UTF_8)
+        return decrypted
     }
 
+    private fun saveData(alias: String, pin: String, key: String, data: ByteArray): Boolean {
+        try {
+            if (pinIsValid(pin)) {
+                val encryptedData = encryptData(alias, data)
+                val salt = getSalt()
+                if (salt != null) {
+                    val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
+                    val encryptedToken = aead.encrypt(encryptedData, secretKey.encoded)
+                    val encryptedBase64Token =  Base64.encodeToString(encryptedToken, Base64.DEFAULT)
+                    sharedPreferences.edit()
+                        .putString(key,encryptedBase64Token)
+                        .apply()
+                    return true
+                }
+            }
+            return false
+        } catch (e: Exception) {
+            return false
+        }
+    }
 
-    fun decryptString(alias: String, pin: String, key: String): String? {
+    private fun getData(alias: String, pin: String, key: String): String? {
         if (pinIsValid(pin)) {
             val encryptedData = sharedPreferences.getString(key, null)
-            val decodedData = Base64.decode(encryptedData, Base64.DEFAULT)
-            if (decodedData != null) {
+            if (encryptedData != null) {
+                val decodedData = Base64.decode(encryptedData, Base64.DEFAULT)
+//                    encryptedData.toByteArray(Charsets.UTF_8)
                 val salt = getSalt()
                 if (salt != null) {
                     val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
                     val bytes = aead.decrypt(decodedData, secretKey.encoded)
-                    val decryptedData = decryptData(alias, bytes)
-                    return String(decryptedData, Charsets.UTF_8)
+                    val d = decryptData(alias, bytes)
+                    return d
                 }
             }
         }

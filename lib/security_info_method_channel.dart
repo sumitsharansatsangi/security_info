@@ -63,12 +63,12 @@ class MethodChannelSecurityInfo extends SecurityInfoPlatform {
     return mockLocationEnabled;
   }
 
-  @override
-  Future<String?> getSecureKey(String alias) async {
-    final secureKey = await methodChannel
-        .invokeMethod<String>('getSecretKey', {"alias": alias});
-    return secureKey;
-  }
+  // @override
+  // Future<String?> getSecureKey(String alias) async {
+  //   final secureKey = await methodChannel
+  //       .invokeMethod<String>('getSecretKey', {"alias": alias});
+  //   return secureKey;
+  // }
 
   @override
   Future<String?> generateSecureKey(String alias) async {
@@ -96,10 +96,10 @@ class MethodChannelSecurityInfo extends SecurityInfoPlatform {
   }
 
   @override
-  Future<bool?> saveString(
-      String alias, String pin, String key, String data) async {
+  Future<bool?> saveData(
+      String alias, String pin, String key, Uint8List data) async {
     return await methodChannel.invokeMethod<bool>(
-        'saveString', {"alias": alias, "pin": pin, "key": key, "data": data});
+        'saveData', {"alias": alias, "pin": pin, "key": key, "data": data});
   }
 
   // @override
@@ -124,9 +124,9 @@ class MethodChannelSecurityInfo extends SecurityInfoPlatform {
   // }
 
   @override
-  Future<String?> getString(String alias, String pin, String key) async {
+  Future<String?> getData(String alias, String pin, String key) async {
     return await methodChannel.invokeMethod<String>(
-        'decryptString', {"alias": alias, "pin": pin, "key": key});
+        'getData', {"alias": alias, "pin": pin, "key": key});
   }
 
   // @override

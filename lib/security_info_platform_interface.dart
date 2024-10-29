@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'security_info_method_channel.dart';
@@ -56,9 +58,9 @@ abstract class SecurityInfoPlatform extends PlatformInterface {
     throw UnimplementedError('generateSecureKey() has not been implemented.');
   }
 
-  Future<String?> getSecureKey(String alias) async {
-    throw UnimplementedError('getSecureKey() has not been implemented.');
-  }
+  // Future<String?> getSecureKey(String alias) async {
+  //   throw UnimplementedError('getSecureKey() has not been implemented.');
+  // }
 
   Future<bool?> hasHardwareSecurity() async {
     throw UnimplementedError('hasHardwareSecurity() has not been implemented.');
@@ -72,9 +74,13 @@ abstract class SecurityInfoPlatform extends PlatformInterface {
     throw UnimplementedError('savePin() has not been implemented.');
   }
 
-  Future<bool?> saveString(
-      String alias, String pin, String key, String data) async {
-    throw UnimplementedError('saveString() has not been implemented.');
+  Future<bool?> saveData(
+      String alias, String pin, String key, Uint8List data) async {
+    throw UnimplementedError('saveData() has not been implemented.');
+  }
+
+  Future<String?> getData(String alias, String pin, String key) async {
+    throw UnimplementedError('getData() has not been implemented.');
   }
 
   // Future<bool?> saveBoolean(
@@ -91,10 +97,6 @@ abstract class SecurityInfoPlatform extends PlatformInterface {
   //     String alias, String pin, String key, double data) async {
   //   throw UnimplementedError('saveDouble() has not been implemented.');
   // }
-
-  Future<String?> getString(String alias, String pin, String key) async {
-    throw UnimplementedError('getString() has not been implemented.');
-  }
 
   // Future<bool?> getBoolean(String alias, String pin, String key) async {
   //   throw UnimplementedError('getBoolean() has not been implemented.');
