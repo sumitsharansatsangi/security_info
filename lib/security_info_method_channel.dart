@@ -97,10 +97,18 @@ class MethodChannelSecurityInfo extends SecurityInfoPlatform {
 
   @override
   Future<bool?> saveData(
-      String alias, String pin, String key, Uint8List data) async {
+      String alias, String pin, String key, String plainText) async {
     return await methodChannel.invokeMethod<bool>(
-        'saveData', {"alias": alias, "pin": pin, "key": key, "data": data});
+        'saveData', {"alias": alias, "pin": pin, "key": key, "plainText": plainText});
   }
+
+// @override
+//   Future<String?> encrypterDecrypter(String data) async {
+//     return await methodChannel.invokeMethod<String>(
+//         'encrypterDecrypter', {"data": data});
+//   }
+
+
 
   // @override
   // Future<bool?> saveBoolean(

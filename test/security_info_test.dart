@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter_test/flutter_test.dart';
 // import 'package:security_info/security_info.dart';
 import 'package:security_info/security_info_platform_interface.dart';
@@ -105,9 +103,19 @@ class MockSecurityInfoPlatform
   }
   
   @override
-  Future<bool?> saveData(String alias, String pin, String key, Uint8List data) {
+  Future<bool?> saveData(String alias, String pin, String key, String plainText) {
     throw UnimplementedError();
   }
+  
+  // @override
+  // Future<String?> encrypterDecrypter(String data) {
+  //   throw UnimplementedError();
+  // }
+  
+  // @override
+  // Future<bool?> saveBoolean(String alias, String pin, String key, bool data) {
+  //   throw UnimplementedError();
+  // }
 
   // @override
   // Future<int?> testENC() {

@@ -1,12 +1,3 @@
-// You have generated a new plugin project without specifying the `--platforms`
-// flag. A plugin project with no platform support was generated. To add a
-// platform, run `flutter create -t plugin --platforms <platforms> .` under the
-// same directory. You can also find a detailed instruction on how to add
-// platforms in the `pubspec.yaml` at
-// https://flutter.dev/to/pubspec-plugin-platforms.
-
-import 'dart:typed_data';
-
 import 'security_info_platform_interface.dart';
 
 class SecurityInfo {
@@ -59,10 +50,14 @@ class SecurityInfo {
   }
 
   static Future<bool?> saveData(
-      String alias, String pin, String key, Uint8List data) async {
+      String alias, String pin, String key, String plainText) async {
     return await SecurityInfoPlatform.instance
-        .saveData(alias, pin, key, data);
+        .saveData(alias, pin, key, plainText);
   }
+
+  //  static Future<String?> encrpterDecrypter(String data) async {
+  //   return await SecurityInfoPlatform.instance.encrypterDecrypter(data);
+  // }
 
   // static Future<bool?> saveBoolean(
   //     String alias, String pin, String key, bool data) async {
@@ -89,6 +84,7 @@ class SecurityInfo {
   // static Future<bool?> getBoolean(String alias, String pin, String key) async {
   //   return await SecurityInfoPlatform.instance.getBoolean(alias, pin, key);
   // }
+  //spa1468tyty
 
   // static Future<int?> getInteger(String alias, String pin, String key) async {
   //   return await SecurityInfoPlatform.instance.getInteger(alias, pin, key);

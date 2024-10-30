@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'security_info_method_channel.dart';
@@ -75,7 +73,7 @@ abstract class SecurityInfoPlatform extends PlatformInterface {
   }
 
   Future<bool?> saveData(
-      String alias, String pin, String key, Uint8List data) async {
+      String alias, String pin, String key, String plainText) async {
     throw UnimplementedError('saveData() has not been implemented.');
   }
 
@@ -87,6 +85,11 @@ abstract class SecurityInfoPlatform extends PlatformInterface {
   //     String alias, String pin, String key, bool data) async {
   //   throw UnimplementedError('saveBoolean() has not been implemented.');
   // }
+
+  // Future<String?> encrypterDecrypter( String data) async {
+  //   throw UnimplementedError('encrypterDecrypter() has not been implemented.');
+  // }
+
 
   // Future<bool?> saveInteger(
   //     String alias, String pin, String key, int data) async {

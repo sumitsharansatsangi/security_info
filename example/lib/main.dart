@@ -39,6 +39,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // bool _isIntSaved = false;
   // bool _isFloatSaved = false;
   String _getString = "";
+  String _encrypterDecrypter = "";
   // int _getInt = 0;
   // bool _getBoolean = true;
   // double _getDouble = 4.0;
@@ -94,6 +95,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // bool isIntSaved = false;
     // bool isFloatSaved = false;
     String getString = "";
+    String encrypterDecrypter = ""; 
     // int getInt = 0;
     // bool getBoolean = true;
     // double getDouble = 4.0;
@@ -117,10 +119,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // getSecureKey = await SecurityInfo.getSecureKey("summy") ?? "";
       isPinSaved = await SecurityInfo.savePin("674534") ?? false;
       isStringSaved = await SecurityInfo.saveData("summy", "674534", "abort",
-              Uint8List.fromList("jvjdjkvhbdjलक्ष्मीपुर, जमुई, बिहार  राजस्व कर्मचारी  भूषण प्रसाद बरनवाल ".codeUnits)) ??
+              "jvjdjkvhbdjलक्ष्मीपुर, जमुई, बिहार  राजस्व कर्मचारी  भूषण प्रसाद बरनवाल ") ??
           false;
-      // isStringSaved = await SecurityInfo.saveData("summy", "674534", "abort",
-      //      aesGcmEncrypt("jvjdjkvhbdjलक्ष्मीपुर, जमुई, बिहार  राजस्व कर्मचारी  भूषण प्रसाद बरनवाल ", aesKey)) ??
       //   false;    
       // isBoolSaved = await SecurityInfo.saveBoolean(
       //         "summy", "674534", "abortBoolean", false) ??
@@ -134,6 +134,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         getString = getUint;
         //  getString =aesGcmDecrypt(getUint,aesKey);
       }
+      // encrypterDecrypter = await SecurityInfo.encrpterDecrypter("gjhghjgh5756gySensitivejvjdjkvhbdjलक्ष्मीपुर, जमुई, बिहार  राजस्व कर्मचारी  भूषण प्रसाद बरनवाल data with Unicode characters: !@#\$%^&*()_+äöüß") ?? "";
       // getInt =await SecurityInfo.getInteger("summy", "674534", "abortInt") ?? 0;
       // getBoolean = await SecurityInfo.getBoolean("summy", "674534", "abortBoolean") ?? false;
       // testENC =  await SecurityInfo.testENC() ?? 0;
@@ -165,6 +166,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // _isFloatSaved = isFloatSaved;
       // _isIntSaved = isIntSaved;
       _getString = getString;
+      _encrypterDecrypter = encrypterDecrypter;
       // _getInt = getInt;
       // _getDouble = getDouble;
       // _getBoolean = getBoolean;
@@ -218,6 +220,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             // Text('Is Int Saved: $_isIntSaved\n'),
             // Text('Is Float Saved: $_isFloatSaved\n'),
             Text('String Saved: $_getString\n'),
+            Text("encrypterDecrypter: $_encrypterDecrypter"),
             // Text('Bool Saved: $_getBoolean\n'),
             // Text('Int Saved: $_getInt\n'),
             // Text('Double Saved: $_getDouble\n'),
@@ -236,17 +239,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final iv = encrypt.IV.fromSecureRandom(12); // GCM requires 12-byte IV
   final encrypter = encrypt.Encrypter(encrypt.AES(aesKey, mode: encrypt.AESMode.gcm));
   final encrypted = encrypter.encrypt(plaintext, iv: iv);
-  print("aesGcmEncrypt encrypted String");
-  print(iv.base64 + encrypted.base64);
+  // print("aesGcmEncrypt encrypted String");
+  // print(iv.base64 + encrypted.base64);
   return base64Decode(iv.base64 + encrypted.base64);
 }
 
 // Decrypt data with AES-GCM
 String aesGcmDecrypt(String encryptedData, encrypt.Key aesKey) {
-  print("aesGcmDecrypt encrypted String");
+  // print("aesGcmDecrypt encrypted String");
   final iv = encrypt.IV.fromUtf8(encryptedData.substring(0, 12));
   final encrypter = encrypt.Encrypter(encrypt.AES(aesKey, mode: encrypt.AESMode.gcm));
-  print(encryptedData);
+  // print(encryptedData);
   return encrypter.decrypt64(encryptedData.substring(12), iv: iv);
 }
 

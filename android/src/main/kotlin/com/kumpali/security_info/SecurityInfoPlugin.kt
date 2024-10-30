@@ -55,9 +55,12 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.GCMParameterSpec
+//import javax.crypto.spec.GCMParameterSpec
 import androidx.core.content.ContextCompat
-import java.nio.ByteBuffer
+import java.security.SecureRandom
+import javax.crypto.spec.GCMParameterSpec
+import java.util.Base64 as b
+import javax.crypto.spec.IvParameterSpec
 import kotlin.Boolean
 
 /** SecurityInfoPlugin */
@@ -190,153 +193,35 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
             } else if (call.method == "generateSecureKey") {
                 val alias: String = call.argument<String>("alias").toString()
                 result.success(generateSecureKey(alias).toString())
-            }
-//            else if (call.method == "getSecretKey") {
-//                val alias: String = call.argument<String>("alias").toString()
-//                result.success(getSecretKey(alias).toString())
-//            }
-            else if (call.method == "deleteKey") {
+            } else if (call.method == "deleteKey") {
                 val alias: String = call.argument<String>("alias").toString()
                 result.success(deleteKey(alias))
             } else if (call.method == "saveData") {
                 val alias: String = call.argument<String>("alias").toString()
                 val pin: String = call.argument<String>("pin").toString()
                 val key: String = call.argument<String>("key").toString()
-                val data: ByteArray = call.argument<ByteArray>("data") ?: byteArrayOf()
-                result.success(saveData(alias, pin, key, data))
-            }
-//                else if (call.method == "saveInteger") {
-//                    val alias: String = call.argument<String>("alias").toString()
-//                    val pin: String = call.argument<String>("pin").toString()
-//                    val key: String = call.argument<String>("key").toString()
-//                    val data: Int = call.argument<Int>("data")?.toInt() ?: 0
-//                    result.success(saveInteger(alias, pin, key ,data))
-//                }
-//                else if (call.method == "saveBoolean") {
-//                    val alias: String = call.argument<String>("alias").toString()
-//                    val pin: String = call.argument<String>("pin").toString()
-//                    val key: String = call.argument<String>("key").toString()
-//                    val data: Boolean = call.argument<Boolean>("data") == true
-//                    result.success(saveBoolean(alias, pin,key, data))
-//                }
-//                else if (call.method == "saveDouble") {
-//                    val alias: String = call.argument<String>("alias").toString()
-//                    val pin: String = call.argument<String>("pin").toString()
-//                    val data: Double = (call.argument<Double>("data") ?: 0.0)
-//                    val key: String = call.argument<String>("key").toString()
-//                    result.success(saveDouble(alias, pin,key, data))
-//                }
-            else if (call.method == "savePin") {
+                val plainText: String = call.argument<String>("plainText").toString()
+                result.success(saveData(alias, pin, key, plainText))
+            } else if (call.method == "savePin") {
                 val pin: String = call.argument<String>("pin").toString()
                 result.success(savePin(pin))
-            } else if (call.method == "getData") {
+            }
+//         else if (call.method == "encrypterDecrypter") {
+//                val data: String = call.argument<String>("data").toString()
+//            result.success(encrypterDecrypter(data))
+//        }
+        else if (call.method == "getData") {
                 val alias: String = call.argument<String>("alias").toString()
                 val pin: String = call.argument<String>("pin").toString()
                 val key: String = call.argument<String>("key").toString()
                 result.success(getData(alias, pin, key))
-            }
-//                else if (call.method == "decryptBoolean"){
-//                    val alias: String = call.argument<String>("alias").toString()
-//                    val key: String = call.argument<String>("key").toString()
-//                    val pin: String = call.argument<String>("pin").toString()
-//                    result.success(decryptBoolean(alias, pin,key))
-//                }
-//                else if (call.method == "decryptInt"){
-//                    val alias: String = call.argument<String>("alias").toString()
-//                    val key: String = call.argument<String>("key").toString()
-//                    val pin: String = call.argument<String>("pin").toString()
-//                    result.success(decryptInt(alias,pin ,key))
-//                }
-//                else if (call.method == "decryptDouble"){
-//                    val alias: String = call.argument<String>("alias").toString()
-//                    val key: String = call.argument<String>("key").toString()
-//                    val pin: String = call.argument<String>("pin").toString()
-//                    result.success(decryptDouble(alias, pin,key))
-//                }
-//                else if (call.method == "testENC"){
-//                   result.success(testENC())
-//                }
-            else {
+            } else {
                 result.notImplemented()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-
-//        private fun testENC() : Int?{
-////            val intArray = ByteBuffer.allocate(4).putInt(109).array()
-////            return ByteBuffer.wrap(intArray).int
-//            val secretKey = getSecretKey("summy")
-//            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-//            cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-//            val iv = cipher.iv
-//////            print("Length of IV: ${iv.size}")
-//            val encryptedData = cipher.doFinal(ByteBuffer.allocate(4).putInt(40).array())
-//            val combo= iv + encryptedData
-//            val salt = getSalt()
-//            if(salt != null){
-//                val secretKeyP = Pbkdf2Factory.createKey("897865".toCharArray(), salt)
-//                val encryptedToken = aead.encrypt(combo, secretKeyP.encoded)
-//                sharedPreferences.edit()
-//                    .putInt("testInt", ByteBuffer.wrap(encryptedToken).int)
-//                    .apply()
-//            }
-//            val encryptedDataSP = sharedPreferences.getInt("testInt", 0)
-//            val decodedData =
-//                ByteBuffer.allocate(4).putInt(encryptedDataSP).array()
-////            val salt = getSalt()
-//            if (salt != null) {
-//                val secretKeyB = Pbkdf2Factory.createKey("897865".toCharArray(), salt)
-//                val bytes = aead.decrypt(decodedData, secretKeyB.encoded)
-//                val decryptedData = decryptData("summy", bytes)
-//                return ByteBuffer.wrap(decryptedData).int
-//            }
-
-
-    ////////////////////
-//            val encryptedDataSP = sharedPreferences.getString("testInt", null)
-//            val decodedData = Base64.decode(encryptedData, Base64.DEFAULT)
-//            if (decodedData != null) {
-//                val salt = getSalt()
-//                if (salt != null){
-//                    val secretKey = Pbkdf2Factory.createKey("897865".toCharArray(), salt)
-//                    val bytes = aead.decrypt(decodedData,secretKey.encoded)
-//                    val decryptedData = decryptData("summy", bytes)
-//                    return String(decryptedData, Charsets.UTF_8)
-//                }
-//            }
-
-//            val plaintext = "Hello, World!".toByteArray()
-//            val alias = "summy"
-//            val pin ="423676"
-////            val key = "my_secret_key_123".toByteArray()
-//            val encryptedData = encryptData(alias, data.toByteArray())
-//            val salt = Salt.generate()
-//            val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-//            val encryptedToken = aead.encrypt(encryptedData, secretKey.encoded)
-//            sharedPreferences.edit()
-//                .putString(key, Base64.encodeToString(encryptedToken, Base64.DEFAULT))
-//                .apply()
-//
-//            // Encryption
-//            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-//            val secretKey = getSecretKey("summy")
-//            val parameterSpec = GCMParameterSpec(128, nonce)
-//            cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec)
-//            val ciphertext = cipher.doFinal(plaintext)
-//
-//            // Decryption (throws AEADBadTagException if authentication fails)
-//            val cipherDec = Cipher.getInstance("AES/GCM/NoPadding")
-//            cipherDec.init(Cipher.DECRYPT_MODE, secretKey, parameterSpec)
-//            try {
-//                val decrypted = cipherDec.doFinal(ciphertext)
-//                println(String(decrypted)) // prints "Hello, World!"
-//            } catch (e: javax.crypto.AEADBadTagException) {
-//                println("AEADBadTagException: Authentication failed")
-//            }
-//        return null
-//        }
 
     private fun getEnrolledFingerprints(context: Context): Boolean {
         val fingerprintManager =
@@ -469,24 +354,7 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
         return Base64.decode(sharedPreferences.getString(StorageKey.SALT, null))
     }
 
-    //        private fun getPin(): ByteArray? {
-//            return Base64.decode(sharedPreferences.getString(StorageKey.PIN, null))
-//        }
-//
-//        private fun byteArrayToFloat(byteArray: ByteArray): Float {
-//            if (byteArray.size != 4) {
-//                throw IllegalArgumentException("Byte array must have exactly 4 bytes")
-//            }
-//            return ByteBuffer.wrap(byteArray).float
-//        }
-//
-//        private fun byteArrayToBoolean(byteArray: ByteArray): Boolean {
-//            if (byteArray.isEmpty()) {
-//                throw IllegalArgumentException("Byte array is empty")
-//            }
-//            return byteArray[0] != 0.toByte()
-//        }
-//
+
     private fun pinIsValid(pin: String): Boolean {
         val encodedSalt = sharedPreferences.getString(StorageKey.SALT, null)
         val encodedPin = sharedPreferences.getString(StorageKey.PIN, null)
@@ -515,100 +383,37 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
             return false
         }
     }
-
-
-//        private fun saveBoolean(alias:String,pin:String,key:String, data: Boolean): Boolean {
-//            try {
-//                if (pinIsValid(pin)) {
-//                    val encryptedData = encryptData(alias, byteArrayOf(if (data) 1 else 0))
-//                    val salt = getSalt()
-//                    if(salt != null){
-//                        val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-//                        val encryptedToken = aead.encrypt(encryptedData, secretKey.encoded)
-//                        sharedPreferences.edit()
-//                            .putBoolean(key, byteArrayToBoolean(encryptedToken))
-//                            .apply()
-//                        return true
-//                    }
-//                }
-//            } catch(e: Exception){
-//                return false
-//            }
-//            return false
-//        }
 //
-//        private fun saveInteger(alias:String,pin:String,key:String, data: Int): Boolean {
-//            try{
-//                if(pinIsValid(pin)) {
-//                    val encryptedData = encryptData(alias, ByteBuffer.allocate(4).putInt(data).array())
-//                    val salt = getSalt()
-//                    if(salt != null){
-//                        val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-//                        val encryptedToken = aead.encrypt(encryptedData, secretKey.encoded)
-//                        sharedPreferences.edit()
-//                            .putInt(key, ByteBuffer.wrap(encryptedToken).int)
-//                            .apply()
-//                        return true
-//                    }
-//                }
-//            }catch (e: Exception){
-//                return false
-//            }
-//            return false
-//        }
+//    private fun encryptData(alias: String, data: ByteArray): ByteArray {
+//        val secretKey = getSecretKey(alias)
+//        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+//        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+//        val iv = cipher.iv
+//        val encryptedData = cipher.doFinal(data)
+//        return iv + encryptedData // Prepend IV to the encrypted data
+//    }
 //
-//        private fun saveDouble(alias:String,pin:String, key:String, data: Double): Boolean {
-//            try {
-//                if (pinIsValid(pin)) {
-//                    val encryptedData =
-//                        encryptData(alias, ByteBuffer.allocate(4).putFloat(data.toFloat()).array())
-//                    val salt = getSalt()
-//                    if(salt != null){
-//                        val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-//                        val encryptedToken = aead.encrypt(encryptedData, secretKey.encoded)
-//                        sharedPreferences.edit()
-//                            .putFloat(key, byteArrayToFloat(encryptedToken))
-//                            .apply()
-//                        return true
-//                    }
-//                }
-//            }catch (e: Exception){
-//                return false
-//            }
-//            return false
-//        }
+//    private fun decryptData(alias: String, encryptedData: ByteArray): String {
+//        val secretKey = getSecretKey(alias)
+//        val iv = encryptedData.copyOfRange(0, 12) // First 12 bytes are the IV
+//        val data = encryptedData.copyOfRange(12, encryptedData.size)
+//        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+//        cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(128, iv))
+//        val decrypted = String(cipher.doFinal(data), Charsets.UTF_8)
+//        return decrypted
+//    }
 
-
-    private fun encryptData(alias: String, data: ByteArray): ByteArray {
-        val secretKey = getSecretKey(alias)
-        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-        val iv = cipher.iv
-        val encryptedData = cipher.doFinal(data)
-        return iv + encryptedData // Prepend IV to the encrypted data
-    }
-
-    private fun decryptData(alias: String, encryptedData: ByteArray): String {
-        val secretKey = getSecretKey(alias)
-        val iv = encryptedData.copyOfRange(0, 12) // First 12 bytes are the IV
-        val data = encryptedData.copyOfRange(12, encryptedData.size)
-        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(128, iv))
-        val decrypted = String(cipher.doFinal(data), Charsets.UTF_8)
-        return decrypted
-    }
-
-    private fun saveData(alias: String, pin: String, key: String, data: ByteArray): Boolean {
+    private fun saveData(alias: String, pin: String, key: String, plainText: String): Boolean {
         try {
             if (pinIsValid(pin)) {
-                val encryptedData = encryptData(alias, data)
+                val encryptedData = encrypt(alias, plainText)
                 val salt = getSalt()
                 if (salt != null) {
                     val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-                    val encryptedToken = aead.encrypt(encryptedData, secretKey.encoded)
-                    val encryptedBase64Token =  Base64.encodeToString(encryptedToken, Base64.DEFAULT)
+                    val encryptedToken = aead.encrypt(encryptedData.toByteArray(Charsets.UTF_8), secretKey.encoded)
+                    val encryptedBase64Token = Base64.encodeToString(encryptedToken, Base64.DEFAULT)
                     sharedPreferences.edit()
-                        .putString(key,encryptedBase64Token)
+                        .putString(key, encryptedBase64Token)
                         .apply()
                     return true
                 }
@@ -624,12 +429,11 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
             val encryptedData = sharedPreferences.getString(key, null)
             if (encryptedData != null) {
                 val decodedData = Base64.decode(encryptedData, Base64.DEFAULT)
-//                    encryptedData.toByteArray(Charsets.UTF_8)
                 val salt = getSalt()
                 if (salt != null) {
                     val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
                     val bytes = aead.decrypt(decodedData, secretKey.encoded)
-                    val d = decryptData(alias, bytes)
+                    val d = decrypt(alias, String(bytes, Charsets.UTF_8))
                     return d
                 }
             }
@@ -637,57 +441,76 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
         return null
     }
 
-//        fun decryptBoolean(alias: String,pin:String ,key:String): Boolean? {
-//            if(pinIsValid(pin)) {
-//                val encryptedData = sharedPreferences.getBoolean(key, false)
-//                val decodedData =
-//                    Base64.decode(byteArrayOf(if (encryptedData) 1 else 0), Base64.DEFAULT)
-//                val salt = getSalt()
-//                if (salt != null) {
-//                    val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-//                    val bytes = aead.decrypt(decodedData, secretKey.encoded)
-//                    val decryptedData = decryptData(alias, bytes)
-//                    return byteArrayToBoolean(decryptedData)
-//                }
-//            }
-//            return null
-//        }
+//    private fun encrypterDecrypter(data: String):String {
+//        // Generate key
+////        val keyGen = KeyGenerator.getInstance("AES")
+////        keyGen.init(256)
+////        val secretKey = keyGen.generateKey()
 //
-//        fun decryptInt(alias: String,pin: String ,key: String): Int? {
-//            if(pinIsValid(pin)) {
-//                val encryptedData = sharedPreferences.getInt(key, 0)
-//                val decodedData =
-//                    ByteBuffer.allocate(4).putInt(encryptedData).array()
-//                val salt = getSalt()
-//                if (salt != null) {
-//                    val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-//                    val bytes = aead.decrypt(decodedData, secretKey.encoded)
-//                    val decryptedData = decryptData(alias, bytes)
-//                    return ByteBuffer.wrap(decryptedData).int
-//                }
-//            }
-//            return null
-//        }
+//        // Define the plaintext with Unicode characters
+////        val plainText = "Sensitive data with Unicode characters: !@#\$%^&*()_+äöüß"
 //
-//        fun decryptDouble(alias: String, pin:String,key: String): Float? {
-//            if(pinIsValid(pin)) {
-//                val encryptedData = sharedPreferences.getInt(key, 0)
-//                val decodedData =
-//                    Base64.decode(ByteBuffer.allocate(4).putInt(encryptedData).array(), Base64.DEFAULT)
-//                val bytes = aead.decrypt(decodedData, null)
-//                val decryptedData = decryptData(alias, bytes)
-//                return byteArrayToFloat(decryptedData)
-//            }
-//            return null
-//        }
+//        // Encrypt
+//        val cipherText = encrypt("summy",data,)
+//        println("Encrypted: $cipherText")
+//
+//        // Decrypt
+//        val decryptedText = decrypt("summy",cipherText,)
+//        println("Decrypted: $decryptedText")
+//        return decryptedText
+//    }
 
-    //    fun decryptData(alias: String, encryptedData: ByteArray, iv: ByteArray): ByteArray {
-    //        val key = getSecretKey(alias)
-    //        val cipher = getCipher()
-    //        val spec = GCMParameterSpec(128, iv)
-    //        cipher.init(Cipher.DECRYPT_MODE, key, spec)
-    //        return cipher.doFinal(encryptedData)
-    //    }
+    fun encrypt(alias: String, plainText: String): String {
+        //        val secretKey = getSecretKey(alias)
+//        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+//        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+//        val iv = cipher.iv
+//        val encryptedData = cipher.doFinal(data)
+//        return iv + encryptedData // Prepend IV to the encrypted data
+        val secretKey = getSecretKey(alias)
+//        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+//        val iv = ByteArray(16)
+
+//        SecureRandom().nextBytes(iv)
+//        val ivSpec = IvParameterSpec(iv)
+//        val spec = GCMParameterSpec(128, iv)
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+        val iv = cipher.iv
+        val cipherText = cipher.doFinal(plainText.toByteArray(Charsets.UTF_8))
+
+//        val cipherTextWithIv = ByteArray(iv.size + cipherText.size)
+//        System.arraycopy(iv, 0, cipherTextWithIv, 0, iv.size)
+//        System.arraycopy(cipherText, 0, cipherTextWithIv, iv.size, cipherText.size)
+        val cipherTextWithIv = iv + cipherText
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            b.getEncoder().encodeToString(cipherTextWithIv)
+        } else {
+            Base64.encodeToString(cipherTextWithIv, Base64.DEFAULT)
+        }
+    }
+
+    fun decrypt(alias:String, cipherText: String): String {
+        val secretKey = getSecretKey(alias)
+        val cipherTextWithIv = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            b.getDecoder().decode(cipherText)
+        } else {
+            Base64.decode(cipherText, Base64.DEFAULT)
+        }
+
+        val iv = cipherTextWithIv.copyOfRange(0, 12)
+        val cipherBytes = cipherTextWithIv.copyOfRange(12, cipherTextWithIv.size)
+
+//        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+//        val ivSpec = IvParameterSpec(iv)
+        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+        val spec = GCMParameterSpec(128, iv)
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, spec)
+
+        val plainTextBytes = cipher.doFinal(cipherBytes)
+        return String(plainTextBytes, Charsets.UTF_8)
+    }
+
 
     fun hasHardwareSecurity() = keyGeneratorGeneric(
         UUID.randomUUID().toString()

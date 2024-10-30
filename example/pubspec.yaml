@@ -24,6 +24,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   permission_handler:
     git: https://github.com/kumsumit/permission_handler.git
+  encrypt: ^5.0.3  
 
 dev_dependencies:
   integration_test:
