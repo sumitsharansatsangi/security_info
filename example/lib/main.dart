@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // bool _isIntSaved = false;
   // bool _isFloatSaved = false;
   String _getString = "";
-  String _encrypterDecrypter = "";
+  // String _encrypterDecrypter = "";
   // int _getInt = 0;
   // bool _getBoolean = true;
   // double _getDouble = 4.0;
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // bool isIntSaved = false;
     // bool isFloatSaved = false;
     String getString = "";
-    String encrypterDecrypter = ""; 
+    // String encrypterDecrypter = ""; 
     // int getInt = 0;
     // bool getBoolean = true;
     // double getDouble = 4.0;
@@ -166,7 +166,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // _isFloatSaved = isFloatSaved;
       // _isIntSaved = isIntSaved;
       _getString = getString;
-      _encrypterDecrypter = encrypterDecrypter;
+      // _encrypterDecrypter = encrypterDecrypter;
       // _getInt = getInt;
       // _getDouble = getDouble;
       // _getBoolean = getBoolean;
@@ -220,7 +220,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             // Text('Is Int Saved: $_isIntSaved\n'),
             // Text('Is Float Saved: $_isFloatSaved\n'),
             Text('String Saved: $_getString\n'),
-            Text("encrypterDecrypter: $_encrypterDecrypter"),
+            // Text("encrypterDecrypter: $_encrypterDecrypter"),
             // Text('Bool Saved: $_getBoolean\n'),
             // Text('Int Saved: $_getInt\n'),
             // Text('Double Saved: $_getDouble\n'),
