@@ -1,4 +1,3 @@
-
 // import 'dart:math';
 // import 'dart:typed_data';
 // import 'package:encrypt/encrypt.dart';
@@ -123,7 +122,7 @@
 //   var topLevelSeq = asn1Parser.nextObject() as ASN1Sequence;
 //   var octetString = topLevelSeq.elements[2] as ASN1OctetString;
 //   var privateKeyInfoBytes = octetString.octets;
-  
+
 //   var privateKeyInfo = ASN1Parser(privateKeyInfoBytes);
 //   var privateKeySeq = privateKeyInfo.nextObject() as ASN1Sequence;
 //     if (privateKeySeq.elements.length < 5) {
@@ -137,7 +136,6 @@
 
 //   return RSAPrivateKey(modulus, privateExponent, p, q);
 // }
-
 
 // Future<void> mainReady() async {
 //   final aesKey = Key.fromSecureRandom(32);

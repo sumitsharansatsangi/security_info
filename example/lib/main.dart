@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // bool isIntSaved = false;
     // bool isFloatSaved = false;
     String getString = "";
-    // String encrypterDecrypter = ""; 
+    // String encrypterDecrypter = "";
     // int getInt = 0;
     // bool getBoolean = true;
     // double getDouble = 4.0;
@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       isStringSaved = await SecurityInfo.saveData("summy", "674534", "abort",
               "jvjdjkvhbdjलक्ष्मीपुर, जमुई, बिहार  राजस्व कर्मचारी  भूषण प्रसाद बरनवाल ") ??
           false;
-      //   false;    
+      //   false;
       // isBoolSaved = await SecurityInfo.saveBoolean(
       //         "summy", "674534", "abortBoolean", false) ??
       //     false;
@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       //         false;
       //  isFloatSaved=  await SecurityInfo.saveDouble("summy", "674534", "abortFloat", 89.08) ?? false;
       var getUint = await SecurityInfo.getData("summy", "674534", "abort");
-      if(getUint != null){
+      if (getUint != null) {
         getString = getUint;
         //  getString =aesGcmDecrypt(getUint,aesKey);
       }
@@ -190,7 +190,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     } else {
       await Permission.location.request();
       await initPlatformState();
-    
     }
   }
 
@@ -198,59 +197,60 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          body: Center(
-        child: ListView(
-          children: [
-            const SizedBox(
-              height: 150,
-            ),
-            Text('Am I Compromised: $_amICompromised\n'),
-            Text('Am I Emulator: $_amIEmulator\n'),
-            Text('Am I Debugged: $_amIDebugged\n'),
-            Text('Is Developer Mode On: $_isDeveloperMode\n'),
-            Text('Is Usb debugging On: $_isUsbDebugging\n'),
-            Text('Is on External Storage: $_isOnExternalStorage\n'),
-            Text('Is Mock Location Enabled: $_isMockLocationEnabled\n'),
-            Text('Is hardware Security: $_hasHardwareSecurity\n'),
-            Text('Is SecuredBox: $_hasSecuredBox\n'),
-            Text(_generateSecureKey),
-            Text('Is Pin Saved: $_isPinSaved\n'),
-            Text('Is String Saved: $_isStringSaved\n'),
-            // Text('Is Bool Saved: $_isBoolSaved\n'),
-            // Text('Is Int Saved: $_isIntSaved\n'),
-            // Text('Is Float Saved: $_isFloatSaved\n'),
-            Text('String Saved: $_getString\n'),
-            // Text("encrypterDecrypter: $_encrypterDecrypter"),
-            // Text('Bool Saved: $_getBoolean\n'),
-            // Text('Int Saved: $_getInt\n'),
-            // Text('Double Saved: $_getDouble\n'),
-            // Text("Float Saved: $_isFloatSaved"),
-            // Text("Test ENC: $_testENC")
-            // Text(_getSecureKey),
-          ],
+        body: Center(
+          child: ListView(
+            children: [
+              const SizedBox(
+                height: 150,
+              ),
+              Text('Am I Compromised: $_amICompromised\n'),
+              Text('Am I Emulator: $_amIEmulator\n'),
+              Text('Am I Debugged: $_amIDebugged\n'),
+              Text('Is Developer Mode On: $_isDeveloperMode\n'),
+              Text('Is Usb debugging On: $_isUsbDebugging\n'),
+              Text('Is on External Storage: $_isOnExternalStorage\n'),
+              Text('Is Mock Location Enabled: $_isMockLocationEnabled\n'),
+              Text('Is hardware Security: $_hasHardwareSecurity\n'),
+              Text('Is SecuredBox: $_hasSecuredBox\n'),
+              Text(_generateSecureKey),
+              Text('Is Pin Saved: $_isPinSaved\n'),
+              Text('Is String Saved: $_isStringSaved\n'),
+              // Text('Is Bool Saved: $_isBoolSaved\n'),
+              // Text('Is Int Saved: $_isIntSaved\n'),
+              // Text('Is Float Saved: $_isFloatSaved\n'),
+              Text('String Saved: $_getString\n'),
+              // Text("encrypterDecrypter: $_encrypterDecrypter"),
+              // Text('Bool Saved: $_getBoolean\n'),
+              // Text('Int Saved: $_getInt\n'),
+              // Text('Double Saved: $_getDouble\n'),
+              // Text("Float Saved: $_isFloatSaved"),
+              // Text("Test ENC: $_testENC")
+              // Text(_getSecureKey),
+            ],
+          ),
         ),
-      ),
-      // floatingActionButton: FloatingActionButton(onPressed: mainReady, child:Icon(Icons.add)),
+        // floatingActionButton: FloatingActionButton(onPressed: mainReady, child:Icon(Icons.add)),
       ),
     );
   }
 
   Uint8List aesGcmEncrypt(String plaintext, encrypt.Key aesKey) {
-  final iv = encrypt.IV.fromSecureRandom(12); // GCM requires 12-byte IV
-  final encrypter = encrypt.Encrypter(encrypt.AES(aesKey, mode: encrypt.AESMode.gcm));
-  final encrypted = encrypter.encrypt(plaintext, iv: iv);
-  // print("aesGcmEncrypt encrypted String");
-  // print(iv.base64 + encrypted.base64);
-  return base64Decode(iv.base64 + encrypted.base64);
-}
+    final iv = encrypt.IV.fromSecureRandom(12); // GCM requires 12-byte IV
+    final encrypter =
+        encrypt.Encrypter(encrypt.AES(aesKey, mode: encrypt.AESMode.gcm));
+    final encrypted = encrypter.encrypt(plaintext, iv: iv);
+    // print("aesGcmEncrypt encrypted String");
+    // print(iv.base64 + encrypted.base64);
+    return base64Decode(iv.base64 + encrypted.base64);
+  }
 
 // Decrypt data with AES-GCM
-String aesGcmDecrypt(String encryptedData, encrypt.Key aesKey) {
-  // print("aesGcmDecrypt encrypted String");
-  final iv = encrypt.IV.fromUtf8(encryptedData.substring(0, 12));
-  final encrypter = encrypt.Encrypter(encrypt.AES(aesKey, mode: encrypt.AESMode.gcm));
-  // print(encryptedData);
-  return encrypter.decrypt64(encryptedData.substring(12), iv: iv);
-}
-
+  String aesGcmDecrypt(String encryptedData, encrypt.Key aesKey) {
+    // print("aesGcmDecrypt encrypted String");
+    final iv = encrypt.IV.fromUtf8(encryptedData.substring(0, 12));
+    final encrypter =
+        encrypt.Encrypter(encrypt.AES(aesKey, mode: encrypt.AESMode.gcm));
+    // print(encryptedData);
+    return encrypter.decrypt64(encryptedData.substring(12), iv: iv);
+  }
 }

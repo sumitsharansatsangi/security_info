@@ -101,17 +101,18 @@ class MockSecurityInfoPlatform
   Future<String?> getData(String alias, String pin, String key) {
     throw UnimplementedError();
   }
-  
+
   @override
-  Future<bool?> saveData(String alias, String pin, String key, String plainText) {
+  Future<bool?> saveData(
+      String alias, String pin, String key, String plainText) {
     throw UnimplementedError();
   }
-  
+
   // @override
   // Future<String?> encrypterDecrypter(String data) {
   //   throw UnimplementedError();
   // }
-  
+
   // @override
   // Future<bool?> saveBoolean(String alias, String pin, String key, bool data) {
   //   throw UnimplementedError();

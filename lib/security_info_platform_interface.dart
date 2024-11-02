@@ -90,7 +90,6 @@ abstract class SecurityInfoPlatform extends PlatformInterface {
   //   throw UnimplementedError('encrypterDecrypter() has not been implemented.');
   // }
 
-
   // Future<bool?> saveInteger(
   //     String alias, String pin, String key, int data) async {
   //   throw UnimplementedError('saveInteger() has not been implemented.');
