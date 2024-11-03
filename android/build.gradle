@@ -28,7 +28,6 @@ android {
     if (project.android.hasProperty("namespace")) {
         namespace = "com.kumpali.security_info"
     }
-
     compileSdk = 35
     ndkVersion = '28.0.12433566'
     compileOptions {
