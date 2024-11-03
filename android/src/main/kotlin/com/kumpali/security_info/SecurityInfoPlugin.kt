@@ -207,7 +207,7 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
 //                val data: String = call.argument<String>("data").toString()
 //            result.success(encrypterDecrypter(data))
 //        }
-        else if (call.method == "getData") {
+            else if (call.method == "getData") {
                 val alias: String = call.argument<String>("alias").toString()
                 val pin: String = call.argument<String>("pin").toString()
                 val key: String = call.argument<String>("key").toString()
@@ -347,17 +347,15 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
     }
 
 
-    private fun getSalt(): ByteArray? {
-        return Base64.decode(sharedPreferences.getString(StorageKey.SALT, null))
+    private fun getSalt(): ByteArray {
+        return Base64.decode(sharedPreferences.getString(StorageKey.SALT, null), Base64.DEFAULT)
     }
 
 
     private fun pinIsValid(pin: String): Boolean {
-        val encodedSalt = sharedPreferences.getString(StorageKey.SALT, null)
-        val encodedPin = sharedPreferences.getString(StorageKey.PIN, null)
-
-        val salt = Base64.decode(encodedSalt, Base64.DEFAULT)
-        val storedPin = Base64.decode(encodedPin, Base64.DEFAULT)
+        val salt = getSalt()
+        val storedPin =
+            Base64.decode(sharedPreferences.getString(StorageKey.PIN, null), Base64.DEFAULT)
 
         val enteredPin = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
         return storedPin contentEquals enteredPin.encoded
@@ -405,15 +403,14 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
             if (pinIsValid(pin)) {
                 val encryptedData = encrypt(alias, plainText)
                 val salt = getSalt()
-                if (salt != null) {
-                    val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-                    val encryptedToken = aead.encrypt(encryptedData.toByteArray(Charsets.UTF_8), secretKey.encoded)
-                    val encryptedBase64Token = Base64.encodeToString(encryptedToken, Base64.DEFAULT)
-                    sharedPreferences.edit()
-                        .putString(key, encryptedBase64Token)
-                        .apply()
-                    return true
-                }
+                val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
+                val encryptedToken =
+                    aead.encrypt(encryptedData.toByteArray(Charsets.UTF_8), secretKey.encoded)
+                val encryptedBase64Token = Base64.encodeToString(encryptedToken, Base64.DEFAULT)
+                sharedPreferences.edit()
+                    .putString(key, encryptedBase64Token)
+                    .apply()
+                return true
             }
             return false
         } catch (e: Exception) {
@@ -427,12 +424,10 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
             if (encryptedData != null) {
                 val decodedData = Base64.decode(encryptedData, Base64.DEFAULT)
                 val salt = getSalt()
-                if (salt != null) {
-                    val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
-                    val bytes = aead.decrypt(decodedData, secretKey.encoded)
-                    val d = decrypt(alias, String(bytes, Charsets.UTF_8))
-                    return d
-                }
+                val secretKey = Pbkdf2Factory.createKey(pin.toCharArray(), salt)
+                val bytes = aead.decrypt(decodedData, secretKey.encoded)
+                val d = decrypt(alias, String(bytes, Charsets.UTF_8))
+                return d
             }
         }
         return null
@@ -487,7 +482,7 @@ class SecurityInfoPlugin : FlutterPlugin, MethodCallHandler {
         }
     }
 
-    fun decrypt(alias:String, cipherText: String): String {
+    fun decrypt(alias: String, cipherText: String): String {
         val secretKey = getSecretKey(alias)
         val cipherTextWithIv = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             b.getDecoder().decode(cipherText)

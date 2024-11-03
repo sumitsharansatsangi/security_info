@@ -118,9 +118,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       generateSecureKey = await SecurityInfo.generateSecureKey("summy") ?? "";
       // getSecureKey = await SecurityInfo.getSecureKey("summy") ?? "";
       isPinSaved = await SecurityInfo.savePin("674534") ?? false;
-      isStringSaved = await SecurityInfo.saveData("summy", "674534", "abort",
-              "jvjdjkvhbdjलक्ष्मीपुर, जमुई, बिहार  राजस्व कर्मचारी  भूषण प्रसाद बरनवाल ") ??
-          false;
+      // isStringSaved = await SecurityInfo.saveData("summy", "674534", "abort",
+      //         "jvjdjkvhbdjलक्ष्मीपुर, जमुई, बिहार  राजस्व कर्मचारी  भूषण प्रसाद बरनवाल / === ") ??
+      //     false;
+      //  isStringSaved = await SecurityInfo.saveData("summy", "674534", "abort",
+      //         "wzaxiZm7oHH3Id98LYdQVhQVfFLLcO/01Ph/xYaODLo=") ??
+      //     false;
+        isStringSaved = await SecurityInfo.saveData("summy", "674534", "abort",
+              "prEBHYBF4kx8iPDVjTIvXA==") ??
+          false;   
       //   false;
       // isBoolSaved = await SecurityInfo.saveBoolean(
       //         "summy", "674534", "abortBoolean", false) ??
